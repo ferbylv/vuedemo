@@ -26,20 +26,49 @@
   <div>
     <el-table
       :data="tableData"
-      style="width: 100%">
+      style="width: 100%;margin-top: 2rem;margin-left: 2rem">
+      <el-table-column
+        prop="title"
+        label="标题"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="status"
+        label="状态"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="category"
+        label="分类"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="tag"
+        label="标签"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="comment"
+        label="评论"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="view"
+        label="访问"
+        width="100">
+      </el-table-column>
       <el-table-column
         prop="date"
-        label="日期"
-        width="180">
+        label="发布时间"
+        width="280">
       </el-table-column>
       <el-table-column
-        prop="name"
-        label="姓名"
+        label="操作"
         width="180">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="地址">
+        <template slot-scope="scope">
+          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+          <el-button type="text" size="small">编辑</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <el-pagination
@@ -49,7 +78,8 @@
       :page-sizes="[10, 20, 30, 40]"
       :page-size="10"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="40">
+      :total="40"
+      style="float: right;margin-top: 1rem">
     </el-pagination>
   </div>
 </div>

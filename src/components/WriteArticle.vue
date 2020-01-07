@@ -33,6 +33,13 @@
           <p>是否置顶:</p>
           <el-radio v-model="isTop" label="1">是</el-radio>
           <el-radio v-model="isTop" label="0">否</el-radio>
+          <p>开启分享：</p>
+          <el-switch
+            v-model="isShare"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            :disabled="shareDisabled">
+          </el-switch>
         </div>
       <div class="category">
           <h2>分类目录</h2>
@@ -90,6 +97,8 @@ export default {
       isTop: '0',
       isShow: 0,
       addShow: 0,
+      isShare: 0,
+      shareDisabled: false,
       categoryName: '',
       category: [{
         id: 1,
@@ -165,6 +174,18 @@ export default {
     },
     cancleShowCategory: function () {
       this.addShow = 0
+    }
+  },
+  watch: {
+    password: function (value) {
+      if (value !== '' || value.length > 0) {
+        this.isShare = 0
+        this.shareDisabled = true
+        this.comment = '0'
+      } else {
+        this.shareDisabled = false
+        this.comment = '1'
+      }
     }
   }
 

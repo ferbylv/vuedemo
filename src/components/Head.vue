@@ -3,12 +3,14 @@
     <el-row>
       <el-col :span="16">
         <el-menu
+          default-active="/home"
           class="el-menu-demo"
           mode="horizontal"
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b"
-          router>
+          router
+          >
           <el-menu-item index="/home">Home</el-menu-item>
           <el-menu-item index="/article">Article</el-menu-item>
           <el-menu-item index="/person">Person</el-menu-item>
@@ -22,7 +24,7 @@
           background-color="#545c64"
           text-color="#fff"
           active-text-color="none">
-          <el-menu-item index="1"><i class="el-icon-s-custom"></i></el-menu-item>
+          <el-menu-item index="1"><el-badge is-dot class="item"><i class="el-icon-s-custom" style="font-size: 2rem"></i></el-badge></el-menu-item>
           <el-menu-item index="2"><a href="#">{{nickname}}</a></el-menu-item>
           <el-menu-item index="3"><el-input  prefix-icon="el-icon-search" v-model="condition" placeholder="请输入内容" @keydown.enter.native="search"></el-input></el-menu-item>
         </el-menu>

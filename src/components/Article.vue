@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div @click="test">
     <el-row class="tac">
       <el-col :span="3">
         <el-menu
-          default-active="2"
+          default-active="/article"
           class="el-menu-vertical-demo"
           background-color="#545c64"
           text-color="#fff"
@@ -18,7 +18,7 @@
             <i class="el-icon-menu"></i>
             <span slot="title">所有文章</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="/article/comment">
             <i class="el-icon-menu"></i>
             <span slot="title">相关评论</span>
           </el-menu-item>
@@ -29,6 +29,10 @@
           <el-menu-item index="5">
             <i class="el-icon-menu"></i>
             <span slot="title">标签管理</span>
+          </el-menu-item>
+          <el-menu-item index="6">
+            <i class="el-icon-menu"></i>
+            <span slot="title">专栏管理</span>
           </el-menu-item>
         </el-menu>
       </el-col>
@@ -46,7 +50,13 @@ export default {
   name: 'Article',
   data: function () {
     return {
-      items: [1, 2, 3]
+      items: [1, 2, 3],
+      path: this.$route.params.id
+    }
+  },
+  methods: {
+    test: function () {
+      console.log(this.path)
     }
   }
 }
