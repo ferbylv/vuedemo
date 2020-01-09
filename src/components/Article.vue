@@ -1,5 +1,5 @@
 <template>
-  <div @click="test">
+  <div>
     <el-row class="tac">
       <el-col :span="3">
         <el-menu
@@ -50,14 +50,11 @@ export default {
   name: 'Article',
   data: function () {
     return {
-      items: [1, 2, 3],
-      path: this.$route.params.id
+      items: [1, 2, 3]
     }
   },
   methods: {
-    test: function () {
-      console.log(this.path)
-    }
+
   }
 }
 </script>

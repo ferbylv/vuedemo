@@ -39,9 +39,9 @@
             <span class="title">热门文章</span><i class="iconfont icon-fire" style="color: red"></i>
           </template>
          <ul>
-           <template  v-for="article in hotArticles">
+           <div  v-for="(article, index) in hotArticles" :key="index">
              <li>{{article}}</li>
-           </template>
+           </div>
          </ul>
         </el-collapse-item>
         <el-collapse-item name="2">
@@ -166,28 +166,35 @@ export default {
       }
       if (this.getScrollHeight() - this.getClientHeight() - this.getScrollTop() <= 0) {
         this.showBackTop = 1
-        for (let i = 4; i < 8; i++) {
-          this.items.push({
-            id: i,
-            title: 'article1',
-            content: 'The object-fit CSS property sets how the content of a replaced element, such as an <img> or <video>, should be resized to fit its container.\n' +
-              '\n' +
-              'You can alter the alignment of the replaced element\'s content object within the element\'s box using the object-position property.',
-            date: '2020-01-04',
-            src: 'http://t8.baidu.com/it/u=1484500186,1503043093&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1578633138&t=9c7f30fd1589b203f83c8343a912f61a'
-          })
+        if (this.$store.state.homeMenu === '0') {
+          for (let i = 4; i < 8; i++) {
+            this.items.push({
+              id: i,
+              title: 'article1' + i,
+              content: 'The object-fit CSS property sets how the content of a replaced element, such as an <img> or <video>, should be resized to fit its container.\n' +
+                '\n' +
+                'You can alter the alignment of the replaced element\'s content object within the element\'s box using the object-position property.',
+              date: '2020-01-04',
+              src: 'http://t8.baidu.com/it/u=1484500186,1503043093&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1578633138&t=9c7f30fd1589b203f83c8343a912f61a'
+            })
+          }
+        } else if (this.$store.state.homeMenu === '1') {
+          for (let i = 6; i < 10; i++) {
+            this.items.push({
+              id: i,
+              title: 'article' + i,
+              content: 'The object-fit CSS property sets how the content of a replaced element, such as an <img> or <video>, should be resized to fit its container.\n' +
+                '\n' +
+                'You can alter the alignment of the replaced element\'s content object within the element\'s box using the object-position property.',
+              date: '2020-01-04',
+              src: 'http://t8.baidu.com/it/u=1484500186,1503043093&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1578633138&t=9c7f30fd1589b203f83c8343a912f61a'
+            })
+          }
         }
-        // if (this.status === 1) {
-        //   this.status = 0
-        //   // 页码，分页用，默认第一页
-        //   // this.deliverParams.page += 1
-        //   // 调用请求函数
-        //   alert('触发！！！')
-        // }
       }
     },
     backTop: function () {
-      document.querySelector('#all').scrollIntoView(true)
+      document.querySelector('#app').scrollIntoView(true)
       this.showBackTop = 0
     },
     showRightDiv: function () {

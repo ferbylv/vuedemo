@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-input placeholder="请输入标题" v-model="title"></el-input>
-    <mavon-editor id="editor" @imgAdd="$imgAdd" @imgDel="$imgDel"></mavon-editor>
+    <mavon-editor id="editor" v-model="articleContent" ref="editor" ></mavon-editor>
     <el-button type="primary" icon="iconfont icon-fabu" id="release" title="发布" @click="showSetting">发布</el-button>
     <div class="articleSetting"  v-show="isShow">
         <div class="head">
@@ -28,8 +28,8 @@
           class="datetime">
         </el-date-picker>
           <p>开启评论:</p>
-          <el-radio v-model="comment" label="1" >开启</el-radio>
-          <el-radio v-model="comment" label="0">关闭</el-radio>
+          <el-radio v-model="comment" label="1" :disabled="commentDisabled">开启</el-radio>
+          <el-radio v-model="comment" label="0" :disabled="commentDisabled">关闭</el-radio>
           <p>是否置顶:</p>
           <el-radio v-model="isTop" label="1">是</el-radio>
           <el-radio v-model="isTop" label="0">否</el-radio>
@@ -39,6 +39,12 @@
             active-color="#13ce66"
             inactive-color="#ff4949"
             :disabled="shareDisabled">
+          </el-switch>
+          <p>开启打赏：</p>
+          <el-switch
+            v-model="isReward"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
           </el-switch>
         </div>
       <div class="category">
@@ -80,6 +86,25 @@
           </el-option>
         </el-select>
       </div>
+      <div class="articles">
+        <h2>专题设置</h2>
+        <p>开启专题:</p>
+        <el-switch
+          v-model="isArticles"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          :disabled="shareDisabled">
+        </el-switch>
+        <el-select v-model="articles" clearable placeholder="请选择" style="width: 100% !important;" v-show="articlesShow">
+          <el-option
+            v-for="item in articlesOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </div>
+      <el-button type="success" @click="push">发布</el-button>
     </div>
   </div>
 
@@ -97,8 +122,20 @@ export default {
       isTop: '0',
       isShow: 0,
       addShow: 0,
-      isShare: 0,
+      isShare: true,
+      isReward: true,
       shareDisabled: false,
+      commentDisabled: false,
+      articles: '',
+      articlesOptions: [{
+        value: 'java',
+        label: 'java'
+      }],
+      isArticles: false,
+      articlesShow: false,
+      articleContent: '',
+      action: '',
+      imageUrl: '', // 打赏图片回显路径
       categoryName: '',
       category: [{
         id: 1,
@@ -174,18 +211,53 @@ export default {
     },
     cancleShowCategory: function () {
       this.addShow = 0
+    },
+    //  打赏图片上传方法
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    },
+    push: function () {
+
+      this.$refs.editor.d_value = '* 123'
+      console.log(this.$refs.editor)
+      console.log(this.$refs.editor.d_render)
+      console.log(this.$refs.editor.d_render.replace(/<[^>]+>|&[^>]+;[\r\n]/g, '').trim().replace(/[\r\n]/g, ' '))
     }
   },
   watch: {
     password: function (value) {
       if (value !== '' || value.length > 0) {
-        this.isShare = 0
+        this.isShare = false
         this.shareDisabled = true
         this.comment = '0'
+        this.commentDisabled = true
+        console.log(this.comment)
       } else {
+        this.isShare = true
         this.shareDisabled = false
         this.comment = '1'
+        this.commentDisabled = false
       }
+    },
+    isArticles: function (value) {
+      if (value) {
+        this.articlesShow = 1
+      }else {
+        this.articlesShow = 0
+      }
+
     }
   }
 
@@ -254,8 +326,20 @@ export default {
     text-align: left;
     max-width: 100% !important;
     margin: 1rem 0.3rem 2rem;
+    border-bottom: 0.05rem solid darkgray;
+    padding-bottom: 1rem;
   }
   .tag *{
+    margin-top: 1rem;
+  }
+  .articles{
+    text-align: left;
+    max-width: 100% !important;
+    margin: 1rem 0.3rem 2rem;
+    border-bottom: 0.05rem solid darkgray;
+    padding-bottom: 1rem;
+  }
+  .articles *{
     margin-top: 1rem;
   }
 </style>

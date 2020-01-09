@@ -18,10 +18,11 @@ export default {
   methods: {
     changeRouter: function (tab, event) {
       if (tab.index === '0') {
-        this.$router.push('/home')
+        this.$store.state.homeMenu = '0'
       } else if (tab.index === '1') {
-        this.$router.push(('/home/follow'))
+        this.$store.state.homeMenu = '1'
       }
+      this.$router.push('/home')
     }
   }
 }

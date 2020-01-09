@@ -11,6 +11,7 @@ import VHead from './components/Head'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import './assets/icon/iconfont.css'
+import store from './store'
 
 Vue.config.productionTip = false
 Vue.prototype.axios = axios
@@ -23,6 +24,7 @@ Vue.component('VHead', VHead)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

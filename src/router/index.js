@@ -1,14 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Recomment from '../components/Recomment'
+import HomeContent from '../components/HomeContent'
 import Home from '../components/Home'
 import Article from '../components/Article'
 import WriteArticle from '../components/WriteArticle'
 import AllArticle from '../components/AllArticle'
 import CommentArticle from '../components/CommentArticle'
-import Follow from '../components/Follow'
 Vue.use(Router)
-console.log(2)
 export default new Router({
   routes: [
     {
@@ -18,13 +16,8 @@ export default new Router({
       children: [
         {
           path: '/',
-          name: 'recomment',
-          component: Recomment
-        },
-        {
-          path: '/home/follow',
-          name: 'follow',
-          component: Follow
+          name: 'homeContent',
+          component: HomeContent
         }
       ]
     },
